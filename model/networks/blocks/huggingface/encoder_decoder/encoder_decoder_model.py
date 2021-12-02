@@ -8,11 +8,6 @@ from model.networks.blocks.huggingface.encoder_decoder.beam_search import beam_s
 
 
 class EncoderDecoderModel(nn.Module):
-    """
-    If proto is mentioned in encoder and decoder dict, loads pretrained models from proto strings.
-    Otherwise, loads a BertGenerationEncoder/BertGenerationDecoder model from encoder and decoder dict.
-    """
-
     def __init__(self, encoder, decoder, **kwargs):
         super().__init__()
 
