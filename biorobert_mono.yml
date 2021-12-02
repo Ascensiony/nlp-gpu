@@ -41,13 +41,13 @@ trainor:
 validator:
   batch_size: 4
   beam_width: 8
-  metrics: [ROUGEL, ROUGE2, BLEU]
+  metrics: [ROUGEL, ROUGE2]
   splits: [validate]
 
 
 ensemblor:
   batch_size: 16
   beam_width: 8
-  metrics: [ROUGEL, ROUGE2, BLEU]
+  metrics: [ROUGEL, ROUGE2]
   splits: [validate, test]
   mode: all
