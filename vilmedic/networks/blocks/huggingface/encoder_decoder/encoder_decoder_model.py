@@ -20,8 +20,7 @@ class EncoderDecoderModel(nn.Module):
     def __init__(self, encoder, decoder, **kwargs):
         super().__init__()
         if 'proto' in decoder and 'proto' in encoder:
-            self.enc_dec = HFEncoderDecoderModel.from_encoder_decoder_pretrained(encoder.pop('proto'),
-                                                                                 decoder.pop('proto'))
+            self.enc_dec = HFEncoderDecoderModel.from_encoder_decoder_pretrained("allenai/biomed_roberta_base", "allenai/biomed_roberta_base")
         else:
             # Encoder
             encoder = vars(encoder)
