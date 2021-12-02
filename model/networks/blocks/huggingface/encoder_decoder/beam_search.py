@@ -1,37 +1,20 @@
 from dataclasses import dataclass
-from typing import Any, Callable, Dict, Iterable, List, Optional, Tuple, Union
+from typing import Dict, List, Optional, Tuple, Union
 
 import torch
 from torch.nn import functional as F
 
-from transformers.file_utils import ModelOutput
-from transformers.generation_beam_search import BeamScorer, BeamSearchScorer
-from transformers.generation_logits_process import (
-    EncoderNoRepeatNGramLogitsProcessor,
-    ForcedBOSTokenLogitsProcessor,
-    ForcedEOSTokenLogitsProcessor,
-    HammingDiversityLogitsProcessor,
-    InfNanRemoveLogitsProcessor,
-    LogitsProcessorList,
-    MinLengthLogitsProcessor,
-    NoBadWordsLogitsProcessor,
-    NoRepeatNGramLogitsProcessor,
-    PrefixConstrainedLogitsProcessor,
-    RepetitionPenaltyLogitsProcessor,
-    TemperatureLogitsWarper,
-    TopKLogitsWarper,
-    TopPLogitsWarper,
-)
+from transformers.generation_beam_search import BeamScorer
+from transformers.generation_logits_process import LogitsProcessorList
 from transformers.generation_stopping_criteria import (
-    MaxLengthCriteria,
-    MaxTimeCriteria,
     StoppingCriteriaList,
     validate_stopping_criteria,
 )
 from transformers.utils import logging
-from transformers.generation_utils import BeamSearchOutput
-from transformers.generation_utils import BeamSearchEncoderDecoderOutput
-from transformers.generation_utils import BeamSearchDecoderOnlyOutput
+from transformers.generation_utils import (BeamSearchOutput, 
+    BeamSearchEncoderDecoderOutput, 
+    BeamSearchDecoderOnlyOutput,
+)
 
 
 def beam_search(
