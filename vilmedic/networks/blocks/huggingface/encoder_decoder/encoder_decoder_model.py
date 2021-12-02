@@ -8,8 +8,6 @@ from transformers import EncoderDecoderModel as HFEncoderDecoderModel
 from vilmedic.networks.models.utils import get_n_params
 from vilmedic.networks.blocks.huggingface.encoder_decoder.beam_search import beam_search
 
-import torch
-
 
 class EncoderDecoderModel(nn.Module):
     """
@@ -19,35 +17,17 @@ class EncoderDecoderModel(nn.Module):
 
     def __init__(self, encoder, decoder, **kwargs):
         super().__init__()
-        if 'proto' in decoder and 'proto' in encoder:
-            self.enc_dec = HFEncoderDecoderModel.from_encoder_decoder_pretrained("allenai/biomed_roberta_base", "allenai/biomed_roberta_base")
-        else:
-            # Encoder
-            encoder = vars(encoder)
-            enc_config = BertGenerationConfig(**encoder)
-            enc = BertGenerationEncoder(enc_config)
-
-            # Decoder
-            decoder = vars(decoder)
-            dec_config = copy.deepcopy(enc_config)
-            dec_config.update(decoder)
-            dec_config.is_decoder = True
-            dec_config.add_cross_attention = True
-            dec = BertGenerationDecoder(dec_config)
-
-            # Encdec
-            self.enc_dec = HFEncoderDecoderModel(encoder=enc, decoder=dec)
-
+        
+        self.enc_dec = HFEncoderDecoderModel.from_encoder_decoder_pretrained(encoder.pop('proto'), decoder.pop('proto'))
+        
         # Evaluation
         self.enc_dec.beam_search = functools.partial(beam_search, self.enc_dec)
 
     def forward(self, input_ids, attention_mask, decoder_input_ids, decoder_attention_mask):
-        input_ids = input_ids.cuda() if torch.cuda.is_available() else input_ids
-        decoder_input_ids = decoder_input_ids.cuda(
-        ) if torch.cuda.is_available() else decoder_input_ids
-        attention_mask = attention_mask.cuda() if torch.cuda.is_available() else attention_mask
-        decoder_attention_mask = decoder_attention_mask.cuda(
-        ) if torch.cuda.is_available() else decoder_attention_mask
+        input_ids = input_ids.cuda()
+        decoder_input_ids = decoder_input_ids.cuda()
+        attention_mask = attention_mask.cuda()
+        decoder_attention_mask = decoder_attention_mask.cuda()
         out = self.enc_dec(input_ids=input_ids,
                            attention_mask=attention_mask,
                            decoder_input_ids=decoder_input_ids,
