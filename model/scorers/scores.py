@@ -33,10 +33,7 @@ def compute_scores(metrics, refs, hyps, split, seed, ckpt_dir, epoch):
         f.write('\n'.join(map(str, hyps)))
 
     for metric in metrics:
-        if metric == 'BLEU':
-            scores["BLEU"] = round(
-                BLEUScorer().compute(refs_file, hyps_file), 2)
-        elif metric == 'ROUGE1':
+        if metric == 'ROUGE1':
             scores["ROUGE1"] = round(ROUGEScorer(
                 rouges=['rouge1']).compute(refs, hyps) * 100, 2)
         elif metric == 'ROUGE2':
