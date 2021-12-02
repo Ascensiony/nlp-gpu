@@ -2,8 +2,6 @@ import torch.nn as nn
 import copy
 import functools
 
-# v4.3.2
-from transformers.models.bert_generation import BertGenerationEncoder, BertGenerationConfig, BertGenerationDecoder
 from transformers import EncoderDecoderModel as HFEncoderDecoderModel
 from model.networks.models.utils import get_n_params
 from model.networks.blocks.huggingface.encoder_decoder.beam_search import beam_search
