@@ -1,1 +1,1 @@
-from vilmedic.networks.models.rrs.SumHugMono import SumHugMono
+from model.networks.models.rrs.SumHugMono import SumHugMono
