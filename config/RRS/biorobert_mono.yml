@@ -22,7 +22,7 @@ model:
     proto: allenai/biomed_roberta_base # edit this
 
 trainor:
-  batch_size: 128
+  batch_size: 16
   optimizer: RAdam
   optim_params:
     lr: 0.00005
