@@ -5,7 +5,6 @@ import torch.nn.functional as F
 import torch
 
 from .NLG import ROUGEScorer
-from .NLG import BLEUScorer
 
 from sklearn.metrics import classification_report, roc_auc_score
 
@@ -19,8 +18,7 @@ def compute_scores(metrics, refs, hyps, split, seed, ckpt_dir, epoch):
     assert refs is not None and hyps is not None, \
         "You specified metrics but your evaluation does not return hyps nor refs"
 
-    assert len(refs) == len(
-        hyps), 'refs and hyps must have same length : {} vs {}'.format(len(refs), len(hyps))
+    assert len(refs) == len(hyps), 'refs and hyps must have same length : {} vs {}'.format(len(refs), len(hyps))
 
     # Dump
     base = os.path.join(ckpt_dir, '{}_{}_{}'.format(split, seed, '{}'))
@@ -47,8 +45,6 @@ def compute_scores(metrics, refs, hyps, split, seed, ckpt_dir, epoch):
         elif metric == 'ROUGEL':
             scores["ROUGEL"] = round(ROUGEScorer(
                 rouges=['rougeL']).compute(refs, hyps) * 100, 2)
-        # elif metric == 'METEOR':
-        #     scores["METEOR"] = round(METEORScorer().compute(refs_file, hyps_file) * 100, 2)
         elif metric == 'accuracy':
             scores["accuracy"] = round(
                 np.mean(np.array(refs) == np.argmax(hyps, axis=-1)) * 100, 2)
@@ -58,11 +54,6 @@ def compute_scores(metrics, refs, hyps, split, seed, ckpt_dir, epoch):
         elif metric == 'auroc':
             scores["auroc"] = roc_auc_score(refs, F.softmax(
                 torch.from_numpy(hyps), dim=-1).numpy(), multi_class="ovr")
-        # elif metric == 'chexbert':
-        #     scores["chexbert"], scores["chexbert-5"] = CheXbert(refs_filename=base.format('refs.chexbert.txt'),
-        #                                                         hyps_filename=base.format('hyps.chexbert.txt'))(hyps,
-        #                                                                                                         refs)
-            # scores["chexbert-5_micro avg_f1-score"] = scores["chexbert-5"]["micro avg"]["f1-score"]
         else:
             raise NotImplementedError(metric)
 
