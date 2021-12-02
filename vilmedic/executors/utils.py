@@ -99,7 +99,7 @@ def create_data_loader(opts, split, logger, called_by_validator=False):
             drop_last=False)
 
     return DataLoader(dataset,
-                      num_workers=0,
+                      num_workers=4,
                       collate_fn=collate_fn,
                       batch_sampler=sampler)
 
