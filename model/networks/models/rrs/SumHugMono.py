@@ -2,8 +2,8 @@ import torch.nn as nn
 import torch
 from collections import OrderedDict
 # v4.3.2
-from vilmedic.networks.blocks.huggingface.encoder_decoder.evaluation import evaluation
-from vilmedic.networks.blocks.huggingface.encoder_decoder.encoder_decoder_model import EncoderDecoderModel
+from model.networks.blocks.huggingface.encoder_decoder.evaluation import evaluation
+from model.networks.blocks.huggingface.encoder_decoder.encoder_decoder_model import EncoderDecoderModel
 
 
 def create_state_dict(ckpt, diff, replace):
@@ -24,11 +24,13 @@ class SumHugMono(nn.Module):
 
         # Do we have pretrained ?
         if 'ckpt' in kwargs and 'enc' in kwargs['ckpt']:
-            st = create_state_dict(kwargs['ckpt']['enc'], diff='linguistic.encoder.', replace='')
+            st = create_state_dict(
+                kwargs['ckpt']['enc'], diff='linguistic.encoder.', replace='')
             self.enc_dec.enc_dec.encoder.load_state_dict(st, strict=True)
             print("loaded")
         if 'ckpt' in kwargs and 'dec' in kwargs['ckpt']:
-            st = create_state_dict(kwargs['ckpt']['dec'], diff='linguistic.encoder.', replace='roberta.')
+            st = create_state_dict(
+                kwargs['ckpt']['dec'], diff='linguistic.encoder.', replace='roberta.')
             self.enc_dec.enc_dec.decoder.load_state_dict(st, strict=False)
 
         # Evaluation

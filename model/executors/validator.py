@@ -3,8 +3,8 @@ import json
 import torch
 import logging
 from .utils import create_data_loader, get_eval_func
-from vilmedic.scorers.scores import compute_scores
-from vilmedic.scorers.post_processing import post_processing
+from model.scorers.scores import compute_scores
+from model.scorers.post_processing import post_processing
 
 
 class InitValidator(object):
@@ -38,7 +38,8 @@ class Validator(InitValidator):
             self.logger.info('Running split: {} by ensembling {} models. '
                              'Using {}.'.format(split,
                                                 len(self.models),
-                                                type(dl.batch_sampler.sampler).__name__,
+                                                type(
+                                                    dl.batch_sampler.sampler).__name__,
                                                 ))
 
             eval_func = get_eval_func(self.models)
@@ -48,8 +49,9 @@ class Validator(InitValidator):
             # model must return at least loss or (refs and hyps)
             # TODO check refs and hyps together
             assert type(results) is dict and \
-                   any(key in results for key in ['loss', 'refs', 'hyps']), \
-                self.logger.error('Evaluation func does not return any evaluation keys')
+                any(key in results for key in ['loss', 'refs', 'hyps']), \
+                self.logger.error(
+                    'Evaluation func does not return any evaluation keys')
 
             scores = dict()
 

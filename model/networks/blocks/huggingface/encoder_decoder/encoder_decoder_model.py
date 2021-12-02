@@ -5,8 +5,8 @@ import functools
 # v4.3.2
 from transformers.models.bert_generation import BertGenerationEncoder, BertGenerationConfig, BertGenerationDecoder
 from transformers import EncoderDecoderModel as HFEncoderDecoderModel
-from vilmedic.networks.models.utils import get_n_params
-from vilmedic.networks.blocks.huggingface.encoder_decoder.beam_search import beam_search
+from model.networks.models.utils import get_n_params
+from model.networks.blocks.huggingface.encoder_decoder.beam_search import beam_search
 
 
 class EncoderDecoderModel(nn.Module):
@@ -17,9 +17,10 @@ class EncoderDecoderModel(nn.Module):
 
     def __init__(self, encoder, decoder, **kwargs):
         super().__init__()
-        
-        self.enc_dec = HFEncoderDecoderModel.from_encoder_decoder_pretrained(encoder.pop('proto'), decoder.pop('proto'))
-        
+
+        self.enc_dec = HFEncoderDecoderModel.from_encoder_decoder_pretrained(
+            encoder.pop('proto'), decoder.pop('proto'))
+
         # Evaluation
         self.enc_dec.beam_search = functools.partial(beam_search, self.enc_dec)
 

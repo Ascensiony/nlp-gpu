@@ -7,7 +7,7 @@ sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 from utils import get_args, get, print_args, get_seed
 from logger import set_logger
-from vilmedic.executors import Trainor, Validator, create_model, create_data_loader
+from model.executors import Trainor, Validator, create_model, create_data_loader
 
 
 def get_n_best(mode):
@@ -34,7 +34,8 @@ def get_ckpts(path, mode):
 def main():
     opts = get_args()
     ensemble_opts = get(opts, 'ensemblor')
-    seed = '{}_{}_{}'.format(ensemble_opts.mode, ensemble_opts.beam_width, get_seed())
+    seed = '{}_{}_{}'.format(
+        ensemble_opts.mode, ensemble_opts.beam_width, get_seed())
     set_logger(opts.ckpt_dir, seed)
 
     # Nice printing the args
@@ -46,7 +47,8 @@ def main():
                           seed=seed)
 
     # fetching all ckpt according to 'mode"
-    ckpts = get_ckpts(os.path.join(evaluator.opts.ckpt_dir, '*.pth'), ensemble_opts.mode)
+    ckpts = get_ckpts(os.path.join(
+        evaluator.opts.ckpt_dir, '*.pth'), ensemble_opts.mode)
     # if specific checkpoint is specified
     if ensemble_opts.ckpt is not None:
         ckpts = [os.path.join(evaluator.opts.ckpt_dir, ensemble_opts.ckpt)]
