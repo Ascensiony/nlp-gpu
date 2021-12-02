@@ -1,0 +1,39 @@
+2021-12-02 13:34:37,965 - 750013 - SETTINGS - Override dict (utils.py:23)
+2021-12-02 13:34:37,966 - 750013 - INFO - {
+    "name": "sum_mono"
+} (utils.py:24)
+2021-12-02 13:34:37,966 - 750013 - SETTINGS - trainor (utils.py:29)
+2021-12-02 13:34:37,966 - 750013 - INFO - {
+    "batch_size": 4,
+    "early_stop": 10,
+    "early_stop_metric": "ROUGE2",
+    "epochs": 99,
+    "eval_start": 0,
+    "lr_decay": "ReduceLROnPlateau",
+    "lr_decay_params": {
+        "factor": 0.8,
+        "min_lr": 1e-06,
+        "patience": 1,
+        "threshold_mode": "abs"
+    },
+    "optim_params": {
+        "lr": 5e-05,
+        "weight_decay": 0.0
+    },
+    "optimizer": "RAdam"
+} (utils.py:30)
+2021-12-02 13:34:37,966 - 750013 - SETTINGS - validator (utils.py:29)
+2021-12-02 13:34:37,967 - 750013 - INFO - {
+    "batch_size": 4,
+    "beam_width": 8,
+    "metrics": [
+        "ROUGEL",
+        "ROUGE2",
+        "BLEU"
+    ],
+    "splits": [
+        "validate"
+    ]
+} (utils.py:30)
+2021-12-02 13:34:39,368 - urllib3.connectionpool - SETTINGS - Starting new HTTPS connection (1): huggingface.co:443 (connectionpool.py:971)
+2021-12-02 13:34:40,910 - urllib3.connectionpool - SETTINGS - https://huggingface.co:443 "HEAD /data/RRS/huggingface/biomed_roberta_base/resolve/main/config.json HTTP/1.1" 404 0 (connectionpool.py:452)
