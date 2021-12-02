@@ -6,20 +6,20 @@ dataset:
   src:
     root: data/RRS/mimic-cxr/
     file: findings.tok
-    tokenizer: data/RRS/huggingface/biomed_roberta_base
+    tokenizer: allenai/biomed_roberta_base # edit this
     tokenizer_max_len: 128
   tgt:
     root: data/RRS/mimic-cxr/
     file: impression.tok
-    tokenizer: data/RRS/huggingface/biomed_roberta_base
+    tokenizer: allenai/biomed_roberta_base # edit this
     tokenizer_max_len: 80
 
 model:
   proto: SumHugMono
   encoder:
-    proto: data/RRS/huggingface/biomed_roberta_base
+    proto: allenai/biomed_roberta_base # edit this
   decoder:
-    proto: data/RRS/huggingface/biomed_roberta_base
+    proto: allenai/biomed_roberta_base # edit this
 
 trainor:
   batch_size: 128
