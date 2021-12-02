@@ -30,16 +30,7 @@ class TextDataset(Dataset):
         self.sentences = make_sentences(root, split, file)
 
         # Create tokenizer from pretrained or vocabulary file
-        if tokenizer is not None:
-            self.tokenizer = AutoTokenizer.from_pretrained(tokenizer)
-        else:
-            vocab_file = os.path.join(ckpt_dir, 'vocab.{}'.format(source))
-            if split == 'train':
-                vocab = Vocab(self.sentences)
-                if not os.path.exists(vocab_file):
-                    vocab.dump(vocab_file)
-            self.tokenizer = BertTokenizer(
-                vocab_file=vocab_file, do_basic_tokenize=False)
+        self.tokenizer = AutoTokenizer.from_pretrained(tokenizer)
 
         # Create tokenizer forwards args
         self.tokenizer_args = {'return_tensors': 'pt', 'padding': True}
