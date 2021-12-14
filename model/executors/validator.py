@@ -4,7 +4,6 @@ import torch
 import logging
 from .utils import create_data_loader, get_eval_func
 from model.scorers.scores import compute_scores
-from model.scorers.post_processing import post_processing
 
 
 class InitValidator(object):
@@ -68,16 +67,6 @@ class Validator(InitValidator):
                                      epoch=self.epoch
                                      )
             scores.update(metrics)
-
-            # Dumping things for potential post processing
-            post_processing(post_processing=self.post_processing,
-                            results=results,
-                            split=split,
-                            seed=self.seed,
-                            ckpt_dir=self.opts.ckpt_dir,
-                            epoch=self.epoch,
-                            dl=dl
-                            )
 
             # Logging scores
             self.logger.info(json.dumps(scores, indent=4, sort_keys=False))
